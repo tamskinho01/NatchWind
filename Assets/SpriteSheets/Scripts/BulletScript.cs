@@ -2,24 +2,26 @@ using UnityEngine;
 
 public class BulletScript : MonoBehaviour
 {
-    public float Speed = 10f;
-    private Vector2 Direction = Vector2.right;
+    public float Speed = 20f;          // Velocidad de la bala
+    public float LifeTime = 7f;        // Tiempo que dura la bala antes de destruirse
 
+    private Vector2 Direction = Vector2.right;
     private Rigidbody2D rb;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        // Inicializamos la velocidad una vez en Start si la dirección ya está seteada
+
+        // Aplica la velocidad inicial
         rb.linearVelocity = Direction * Speed;
 
-        // Destruir la bala después de 5 segundos para limpiar la escena si no colisiona
-        Destroy(gameObject, 5f);
+        // Destruye la bala tras LifeTime segundos
+        Destroy(gameObject, LifeTime);
     }
 
     void FixedUpdate()
     {
-        // Mover la bala en la dirección dada
+        // Mantiene la velocidad constante
         rb.linearVelocity = Direction * Speed;
     }
 
@@ -41,10 +43,10 @@ public class BulletScript : MonoBehaviour
             {
                 enemy.TakeDamage(1);
             }
+
             Destroy(gameObject);
         }
     }
-
 
     public void DestroyBullet()
     {
